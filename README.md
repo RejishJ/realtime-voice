@@ -1,7 +1,7 @@
 # Setting up PipeWire
 ## First check: PipeWire is active
 ```bash
-$ pactl info | grep "Server Name"
+pactl info | grep "Server Name"
 ```
 ### Expected output
 ```bash
@@ -9,18 +9,18 @@ Server Name: PulseAudio (on PipeWire x.x.x)
 ```
 ## If not installed install PipeWire packages
 ```bash
-$ sudo apt update
-$ sudo apt install -y pipewire pipewire-audio-client-libraries pipewire-pulse wireplumber
+sudo apt update
+sudo apt install -y pipewire pipewire-audio-client-libraries pipewire-pulse wireplumber
 ```
 ## Disable PulseAudio (user-level)
 ```bash
-$ systemctl --user disable pulseaudio.service pulseaudio.socket
-$ systemctl --user stop pulseaudio.service pulseaudio.socket
+systemctl --user disable pulseaudio.service pulseaudio.socket
+systemctl --user stop pulseaudio.service pulseaudio.socket
 ```
 ## Enable PipeWire services
 ```bash
-$ systemctl --user enable pipewire pipewire-pulse wireplumber
-$ systemctl --user start pipewire pipewire-pulse wireplumber
+systemctl --user enable pipewire pipewire-pulse wireplumber
+systemctl --user start pipewire pipewire-pulse wireplumber
 ```
 ## Log out & log back in
 **This is important:**
@@ -29,7 +29,7 @@ $ systemctl --user start pipewire pipewire-pulse wireplumber
 - Log back in
 ## Verify
 ```bash
-$ pactl info | grep "Server Name"
+pactl info | grep "Server Name"
 ```
 ### Expected output
 ```bash
@@ -40,7 +40,7 @@ Server Name: PulseAudio (on PipeWire x.x.x)
 
 # List your audio input devices
 ```bash
-$ arecord -l
+arecord -l
 ```
 
 ---
@@ -48,17 +48,17 @@ $ arecord -l
 # Project Setup
 ## Install venv module
 ```bash
-$ sudo apt install -y python3-venv
+sudo apt install -y python3-venv
 ```
 ## Create project structure
 ```bash
-$ mkdir -p ~/realtime_voice/core/audio
-$ cd ~/realtime_voice
+mkdir -p ~/realtime_voice/core/audio
+cd ~/realtime_voice
 ```
 ## Create a virtual environment
 ```bash
-$ python3 -m venv venv
-$ source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 ### Output
 ```bash
@@ -67,17 +67,17 @@ $ source venv/bin/activate
 > if venv shows up it's working
 ## Install required Python packages
 ```bash
-$ pip install sounddevice numpy
-$ sudo apt install -y portaudio19-dev
+pip install sounddevice numpy
+sudo apt install -y portaudio19-dev
 ```
 ## Create the realtime input stream file
 ```bash
-$ nano core/audio/input_stream.py
+nano core/audio/input_stream.py
 ```
 > input_stream.py-----------------------------------
 ## Run it
 ```bash
-$ python core/audio/input_stream.py
+python core/audio/input_stream.py
 ```
 ## Expected Output
 ```bash
@@ -95,21 +95,21 @@ That’s realtime streaming.
 # Streaming STT
 ## FORCE CPU-ONLY TORCH
 ```bash
-$ pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 ```
 > Forces CPU-only Torch, 
 Prevents CUDA/NVIDIA installs
 ## Verify Torch
 ```bash
-$ pip list | grep torch
+pip list | grep torch
 ```
 ## Install Whisper
 ```bash
-$ pip install openai-whisper
+pip install openai-whisper
 ```
 ## Sanity check
 ```bash
-$ python3 - << 'EOF'
+python3 - << 'EOF'
 import torch
 print("CUDA available:", torch.cuda.is_available())
 import whisper
@@ -124,15 +124,15 @@ Whisper OK
 ## Create Whisper STT module
 ```bash
 # Create folder
-$ mkdir -p core/stt
+mkdir -p core/stt
 # Create file
-$ nano core/stt/whisper_streaming.py
+nano core/stt/whisper_streaming.py
 ```
 > whisper_streaming.py----------------------------------
 ## Connect Whisper to your audio stream
 ```bash
 # Edit
-$ nano core/audio/input_stream.py
+nano core/audio/input_stream.py
 ```
 > input_stream.py---------------------------------------
 ## Make core a Python package
